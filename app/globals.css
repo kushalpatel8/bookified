@@ -3,6 +3,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
+*{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
