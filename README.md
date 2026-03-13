@@ -83,5 +83,7 @@ bookified/
 ├── public/                     # Static assets (images, icons)
 ├── types.d.ts                  # Global TypeScript definitions
 └── [Config Files]              # package.json, next.config.ts, tailwind, etc.
+
+
 🤝 Contributing
 Contributions, issues, and feature requests are welcome! Feel free to check the issues page
