@@ -60,33 +60,28 @@ yarn dev
 Open the application:
 Navigate to http://localhost:3000 in your browser to see the result.
 
-📁 Project Structure
-Here is an overview of the core project directories and their purposes:
+# 📁 Project Structure
 
-Plaintext
+```text
 bookified/
-├── app/                        # Next.js App Router core pages and API routes
-│   ├── (root)/                 # Main layout group (landing page, add new book)
-│   ├── api/                    # Backend API routes (file uploads, Vapi webhooks/search)
-│   ├── books/[slug]/           # Dynamic routes for individual book details
-│   ├── subscriptions/          # Subscription management interface
-│   └── layout.tsx / globals.css# Global layout wrapper and CSS
-├── components/                 # Reusable React components
-│   ├── ui/                     # Shadcn UI and Radix primitives (buttons, dialogs, forms)
-│   └── ...                     # Custom components (BookCard, FileUploader, VapiControls)
-├── database/                   # Database logic and ORM setup
-│   ├── models/                 # Mongoose schemas (book, book-segment, voice-session)
-│   └── mongoose.ts             # MongoDB connection utility
-├── hooks/                      # Custom React hooks
-│   ├── use-mobile.ts           # Responsive design helper
-│   ├── useSubscription.ts      # Subscription state management
-│   └── useVapi.ts              # Voice AI integration hook
-├── lib/                        # Utility functions and server actions
-│   ├── actions/                # Next.js Server Actions (book.actions, session.actions)
-│   ├── utils.ts                # General helper utilities (e.g., class merging)
-│   └── zod.ts                  # Zod validation schemas for API and form integrity
-├── public/                     # Static assets (images, icons, SVGs)
-│   └── assets/                 # App banners, logos, and UI illustrations
-└── [Config Files]              # package.json, next.config.ts, tailwind/postcss config, etc.
+├── app/                        # Next.js App Router
+│   ├── (root)/                 # Main layout (landing page, add book)
+│   ├── api/                    # API routes (uploads, Vapi integrations)
+│   ├── books/[slug]/           # Dynamic book details pages
+│   ├── subscriptions/          # Subscription pages
+│   └── layout.tsx / globals.css# Global layout and styles
+├── components/                 # React components
+│   ├── ui/                     # Shadcn UI / Radix primitives
+│   └── ...                     # Custom UI (BookCard, Navbar, VapiControls)
+├── database/                   # MongoDB connection & schemas
+│   ├── models/                 # Mongoose models (Book, Session, etc.)
+│   └── mongoose.ts             # Database connection setup
+├── hooks/                      # Custom React hooks (useVapi, useSubscription)
+├── lib/                        # Server actions and utilities
+│   ├── actions/                # Book and session actions
+│   └── utils.ts / zod.ts       # Helper functions and validations
+├── public/                     # Static assets (images, icons)
+├── types.d.ts                  # Global TypeScript definitions
+└── [Config Files]              # package.json, next.config.ts, tailwind, etc.
 🤝 Contributing
 Contributions, issues, and feature requests are welcome! Feel free to check the issues page
