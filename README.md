@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bookified 📚
 
-## Getting Started
+Bookified is a modern, full-stack web application built with Next.js that allows users to manage, store, and interact with their book collections. The platform features secure file storage, robust authentication, and AI-powered voice interactions.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
+* **User Authentication**: Secure user login and identity management using Clerk.
+* **Book Management**: Users can upload books and covers, storing the files and their metadata seamlessly.
+* **Cloud Storage**: Integration with Vercel Blob for reliable storage of book files and cover images.
+* **Database Integration**: Robust data modeling using MongoDB and Mongoose to track book details like author, title, file size, and unique slugs.
+* **Voice AI Capabilities**: Integration with Vapi AI (`@vapi-ai/web`) allowing for interactive book personas or voice-driven experiences.
+* **Modern UI/UX**: Built with Tailwind CSS, Shadcn UI, and Radix UI components for a fully responsive and accessible design.
+* **Search & Discovery**: Browse recent books via a grid interface and filter through the collection using the built-in search functionality.
+
+## 🛠️ Tech Stack
+
+* **Framework**: Next.js (App Router)
+* **Library**: React
+* **Database**: MongoDB & Mongoose
+* **Authentication**: Clerk
+* **Storage**: Vercel Blob
+* **Voice/AI**: Vapi AI
+* **Styling**: Tailwind CSS
+* **Components**: Shadcn UI, Radix UI
+* **Form Handling & Validation**: React Hook Form, Zod
+
+## 📋 Prerequisites
+
+Ensure you have the following installed on your local machine:
+* Node.js (v20 or higher)
+* npm, yarn, pnpm, or bun
+
+You will also need to set up accounts and obtain API keys for:
+* MongoDB
+* Clerk
+* Vercel Blob
+* Vapi AI
+
+## ⚙️ Getting Started
+
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repository-url>
+   cd bookified
+Install dependencies:
+
+Bash
+npm install
+# or
+yarn install
+Set up environment variables:
+Create a .env.local file in the root directory and add your necessary environment variables (e.g., Clerk keys, MongoDB URI, Vercel Blob tokens, and Vapi keys).
+
+Run the development server:
+
+Bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Open the application:
+Navigate to http://localhost:3000 in your browser to see the result.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+📁 Project Structure
+Here is an overview of the core project directories and their purposes:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Plaintext
+bookified/
+├── app/                        # Next.js App Router core pages and API routes
+│   ├── (root)/                 # Main layout group (landing page, add new book)
+│   ├── api/                    # Backend API routes (file uploads, Vapi webhooks/search)
+│   ├── books/[slug]/           # Dynamic routes for individual book details
+│   ├── subscriptions/          # Subscription management interface
+│   └── layout.tsx / globals.css# Global layout wrapper and CSS
+├── components/                 # Reusable React components
+│   ├── ui/                     # Shadcn UI and Radix primitives (buttons, dialogs, forms)
+│   └── ...                     # Custom components (BookCard, FileUploader, VapiControls)
+├── database/                   # Database logic and ORM setup
+│   ├── models/                 # Mongoose schemas (book, book-segment, voice-session)
+│   └── mongoose.ts             # MongoDB connection utility
+├── hooks/                      # Custom React hooks
+│   ├── use-mobile.ts           # Responsive design helper
+│   ├── useSubscription.ts      # Subscription state management
+│   └── useVapi.ts              # Voice AI integration hook
+├── lib/                        # Utility functions and server actions
+│   ├── actions/                # Next.js Server Actions (book.actions, session.actions)
+│   ├── utils.ts                # General helper utilities (e.g., class merging)
+│   └── zod.ts                  # Zod validation schemas for API and form integrity
+├── public/                     # Static assets (images, icons, SVGs)
+│   └── assets/                 # App banners, logos, and UI illustrations
+└── [Config Files]              # package.json, next.config.ts, tailwind/postcss config, etc.
+🤝 Contributing
+Contributions, issues, and feature requests are welcome! Feel free to check the issues page
