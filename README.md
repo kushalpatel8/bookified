@@ -2,6 +2,12 @@
 
 Bookified is a modern, full-stack web application built with Next.js that allows users to manage, store, and interact with their book collections. The platform features secure file storage, robust authentication, and AI-powered voice interactions.
 
+## 📸 Screenshots
+
+![Screenshot 1](./Screenshot1.png)
+![Screenshot 2](./Screenshot2.png)
+![Screenshot 3](./Screenshot3.png)
+
 ## 🚀 Features
 
 * **User Authentication**: Secure user login and identity management using Clerk.
