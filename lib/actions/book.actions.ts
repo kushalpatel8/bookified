@@ -7,6 +7,9 @@ import Book from "@/database/models/book.model";
 import BookSegment from "@/database/models/book-segment.model";
 import mongoose from "mongoose";
 import {getUserPlan} from "@/lib/subscription.server";
+import {PLAN_LIMITS} from "@/lib/subscription-constants";
+import {auth} from "@clerk/nextjs/server";
+import {revalidatePath} from "next/cache";
 
 export const getAllBooks = async (search?: string) => {
     try {
@@ -81,11 +84,7 @@ export const createBook = async (data: CreateBook) => {
             }
         }
 
-        // Todo: Check subscription limits before creating a book
-        const { getUserPlan } = await import("@/lib/subscription.server");
-        const { PLAN_LIMITS } = await import("@/lib/subscription-constants");
-
-        const { auth } = await import("@clerk/nextjs/server");
+        // Check subscription limits before creating a book
         const { userId } = await auth();
 
         if (!userId || userId !== data.clerkId) {
@@ -98,7 +97,6 @@ export const createBook = async (data: CreateBook) => {
         const bookCount = await Book.countDocuments({ clerkId: userId });
 
         if (bookCount >= limits.maxBooks) {
-            const { revalidatePath } = await import("next/cache");
             revalidatePath("/");
 
             return {
@@ -182,6 +180,14 @@ export const searchBookSegments = async (bookId: string, query: string, limit: n
         await connectToDatabase();
 
         console.log(`Searching for: "${query}" in book ${bookId}`);
+
+        if (!mongoose.Types.ObjectId.isValid(bookId)) {
+            return {
+                success: false,
+                error: 'Invalid book ID',
+                data: [],
+            };
+        }
 
         const bookObjectId = new mongoose.Types.ObjectId(bookId);
 

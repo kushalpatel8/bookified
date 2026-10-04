@@ -1,17 +1,16 @@
 'use server';
 
-import {EndSessionResult, StartSessionResult} from "@/types";
-import {connectToDatabase} from "@/database/mongoose";
+import mongoose from "mongoose";
+import { revalidatePath } from "next/cache";
+import { EndSessionResult, StartSessionResult } from "@/types";
+import { connectToDatabase } from "@/database/mongoose";
 import VoiceSession from "@/database/models/voice-session.model";
-import {getCurrentBillingPeriodStart} from "@/lib/subscription-constants";
+import { getCurrentBillingPeriodStart, PLAN_LIMITS } from "@/lib/subscription-constants";
+import { getUserPlan } from "@/lib/subscription.server";
 
 export const startVoiceSession = async (clerkId: string, bookId: string): Promise<StartSessionResult> => {
     try {
         await connectToDatabase();
-
-        // Limits/Plan to see whether a session is allowed.
-        const { getUserPlan } = await import("@/lib/subscription.server");
-        const { PLAN_LIMITS, getCurrentBillingPeriodStart } = await import("@/lib/subscription-constants");
 
         const plan = await getUserPlan();
         const limits = PLAN_LIMITS[plan];
@@ -23,7 +22,6 @@ export const startVoiceSession = async (clerkId: string, bookId: string): Promis
         });
 
         if (sessionCount >= limits.maxSessionsPerMonth) {
-            const { revalidatePath } = await import("next/cache");
             revalidatePath("/");
 
             return {
@@ -56,6 +54,10 @@ export const endVoiceSession = async (sessionId: string, durationSeconds: number
     try {
         await connectToDatabase();
 
+        if (!mongoose.Types.ObjectId.isValid(sessionId)) {
+            return { success: false, error: 'Invalid session ID.' };
+        }
+
         const result = await VoiceSession.findByIdAndUpdate(sessionId, {
             endedAt: new Date(),
             durationSeconds,
@@ -69,4 +71,5 @@ export const endVoiceSession = async (sessionId: string, durationSeconds: number
         return { success: false, error: 'Failed to end voice session. Please try again later.' }
     }
 }
+
 

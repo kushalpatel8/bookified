@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, IBM_Plex_Serif, Mona_Sans } from "next/font/google";
+import { IBM_Plex_Serif, Mona_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -20,7 +20,7 @@ const monaSans = Mona_Sans({
 
 export const metadata: Metadata = {
   title: "Bookified",
-  description: "Transform your books into intractive AI conversations ,Uploads your books and start chatting with them.",
+  description: "Transform your books into interactive AI conversations. Upload your books and start chatting with them.",
 };
 
 export default function RootLayout({

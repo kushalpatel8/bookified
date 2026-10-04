@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useSyncExternalStore } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Upload, ImageIcon } from 'lucide-react';
@@ -9,26 +9,24 @@ import { BookUploadFormValues } from '@/types';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ACCEPTED_PDF_TYPES, ACCEPTED_IMAGE_TYPES, DEFAULT_VOICE } from '@/lib/constants';
+import { ACCEPTED_PDF_TYPES, ACCEPTED_IMAGE_TYPES } from '@/lib/constants';
 import FileUploader from './FileUploader';
 import VoiceSelector from './VoiceSelector';
 import LoadingOverlay from './LoadingOverlay';
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 import { toast } from 'sonner';
 import { checkBookExists, createBook, saveBookSegments } from "@/lib/actions/book.actions";
 import { useRouter } from "next/navigation";
 import { parsePDFFile } from "@/lib/utils";
 import { upload } from "@vercel/blob/client";
 
+const emptySubscribe = () => () => {};
+
 const UploadForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isMounted, setIsMounted] = useState(false);
+    const isMounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
     const { userId } = useAuth();
-    const router = useRouter()
-
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
+    const router = useRouter();
 
     const form = useForm<BookUploadFormValues>({
         resolver: zodResolver(UploadSchema),

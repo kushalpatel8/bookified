@@ -48,25 +48,29 @@ You will also need to set up accounts and obtain API keys for:
    ```bash
    git clone <your-repository-url>
    cd bookified
-Install dependencies:
+   ```
 
-Bash
-npm install
-# or
-yarn install
-Set up environment variables:
-Create a .env.local file in the root directory and add your necessary environment variables (e.g., Clerk keys, MongoDB URI, Vercel Blob tokens, and Vapi keys).
+2. **Install dependencies:**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-Run the development server:
+3. **Set up environment variables:**
+   Create a `.env.local` file in the root directory and add your necessary environment variables (e.g., Clerk keys, MongoDB URI, Vercel Blob tokens, and Vapi keys).
 
-Bash
-npm run dev
-# or
-yarn dev
-Open the application:
-Navigate to http://localhost:3000 in your browser to see the result.
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-# 📁 Project Structure
+5. **Open the application:**
+   Navigate to [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+
+## 📁 Project Structure
 
 ```text
 bookified/
@@ -89,5 +93,9 @@ bookified/
 ├── public/                     # Static assets (images, icons)
 ├── types.d.ts                  # Global TypeScript definitions
 └── [Config Files]              # package.json, next.config.ts, tailwind, etc.
-🤝 Contributing
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page
+```
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
+
