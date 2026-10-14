@@ -252,7 +252,15 @@ export function useVapi(book: IBook) {
             }
             // Cleanup handlers
             Object.entries(handlers).forEach(([event, handler]) => {
-                vapi.off(event as keyof typeof handlers, handler as () => void);
+                const emitter = vapi as {
+                    off?: (e: string, h: (...args: unknown[]) => void) => void;
+                    removeListener?: (e: string, h: (...args: unknown[]) => void) => void;
+                };
+                if (typeof emitter.off === 'function') {
+                    emitter.off(event, handler as (...args: unknown[]) => void);
+                } else if (typeof emitter.removeListener === 'function') {
+                    emitter.removeListener(event, handler as (...args: unknown[]) => void);
+                }
             });
             if (timerRef.current) clearInterval(timerRef.current);
         };

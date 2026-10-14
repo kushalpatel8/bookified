@@ -9,6 +9,7 @@ import {toast} from "sonner";
 
 import {useRouter} from "next/navigation";
 import {useEffect} from "react";
+import { getVoice } from "@/lib/utils";
 
 const VapiControls = ({ book }: { book: IBook }) => {
     const { status, isActive, messages, currentMessage, currentUserMessage, duration, start, stop, clearError, limitError, isBillingError, maxDurationSeconds } = useVapi(book)
@@ -52,7 +53,7 @@ const VapiControls = ({ book }: { book: IBook }) => {
                 <div className="vapi-header-card">
                     <div className="vapi-cover-wrapper">
                         <Image
-                            src={book.coverURL || "/images/book-placeholder.png"}
+                            src={book.coverURL || "/assets/book-cover.svg"}
                             alt={book.title}
                             width={120}
                             height={180}
@@ -92,7 +93,7 @@ const VapiControls = ({ book }: { book: IBook }) => {
                             </div>
 
                             <div className="vapi-status-indicator">
-                                <span className="vapi-status-text">Voice: {book.persona || "Daniel"}</span>
+                                <span className="vapi-status-text">Voice: {getVoice(book.persona).name}</span>
                             </div>
 
                             <div className="vapi-status-indicator">

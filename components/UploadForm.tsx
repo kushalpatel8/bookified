@@ -9,7 +9,7 @@ import { BookUploadFormValues } from '@/types';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ACCEPTED_PDF_TYPES, ACCEPTED_IMAGE_TYPES } from '@/lib/constants';
+import { ACCEPTED_PDF_TYPES, ACCEPTED_IMAGE_TYPES, DEFAULT_VOICE } from '@/lib/constants';
 import FileUploader from './FileUploader';
 import VoiceSelector from './VoiceSelector';
 import LoadingOverlay from './LoadingOverlay';
@@ -33,7 +33,7 @@ const UploadForm = () => {
         defaultValues: {
             title: '',
             author: '',
-            persona: '',
+            persona: DEFAULT_VOICE,
             pdfFile: undefined,
             coverImage: undefined,
         },
@@ -82,8 +82,8 @@ const UploadForm = () => {
                     contentType: coverFile.type
                 });
                 coverUrl = uploadedCoverBlob.url;
-            } else {
-                const response = await fetch(parsedPDF.cover)
+            } else if (parsedPDF.cover) {
+                const response = await fetch(parsedPDF.cover);
                 const blob = await response.blob();
 
                 const uploadedCoverBlob = await upload(`${fileTitle}_cover.png`, blob, {
@@ -92,6 +92,8 @@ const UploadForm = () => {
                     contentType: 'image/png'
                 });
                 coverUrl = uploadedCoverBlob.url;
+            } else {
+                coverUrl = '/assets/book-cover.svg';
             }
 
             const book = await createBook({
@@ -123,8 +125,8 @@ const UploadForm = () => {
             const segments = await saveBookSegments(book.data._id, userId, parsedPDF.content);
 
             if (!segments.success) {
-                toast.error("Failed to save book segments");
-                throw new Error("Failed to save book segments");
+                toast.error(segments.error as string || "Failed to save book segments");
+                return;
             }
 
             form.reset();
